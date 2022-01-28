@@ -21,6 +21,9 @@ int Main_Menu_Entrance(int a)
     else if (a == 1)
     return 1;
 
+    else if (a == 2)
+    return 2;
+
 }
 
 int main()
