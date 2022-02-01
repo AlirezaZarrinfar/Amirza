@@ -15,6 +15,15 @@ void Entrance(int a);
 void Login();
 void Rank();
 void Challenge();
+void Show_Internal_Menu();
+void Entrance_Internal(int a);
+string name;
+string password;
+int level;
+int coin;
+int extraWords;
+int chance;
+
 
 int main()
 {     
@@ -127,9 +136,15 @@ void Sign_Up()
         ouser << "\n";
     }
     ouser << Name << "\t" << Password << "\t" << "1" << "\t" << "0" << "\t" << "0" << "\t" << "0";
+    name = Name;
+    password = Password; 
+    coin = 0; 
+    level = 1; 
+    chance = 0; 
+    extraWords = 0;
     ouser.close();
     cout << "Successfully Done !!" << endl;
-    Show_Main_Menu();
+    Show_Internal_Menu();
     }
 }}
 
@@ -194,7 +209,13 @@ void Login()
     {
     if (Password == Users[temp][1])
     {
-         cout << "Your Password Is Correct";
+        name = Users[temp][0];
+        password = Users[temp][1];
+        level = stoi(Users[temp][2]);
+        coin = stoi(Users[temp][3]);
+        extraWords = stoi(Users[temp][4]);
+        chance = stoi(Users[temp][5]);
+        Show_Internal_Menu();
     }
     else
     {
@@ -257,8 +278,7 @@ void Rank()
 void Challenge()
 {
     srand(time(0));
-    int RandomNum = rand()%17+1;
-
+    int RandomNum = rand()%20+1;
     ifstream ilevels ("./levels.txt");
     string temp;
 
@@ -416,4 +436,30 @@ void Challenge()
     }
     count = 0;
     Show_Main_Menu();
+}
+
+void Show_Internal_Menu()
+{
+    cout << "****** Internal Menu ******" << endl;
+    cout << "1.Continue game" << endl;
+    cout << "2.Choose level" << endl;
+    cout << "3.Wheel of Luck" << endl;
+    cout << "4.Edit profile" << endl;
+    cout << "5.Logout" << endl;
+    int EntranceNum;
+    cout << "Please Enter Your Choice : ";
+    cin >> EntranceNum;
+    Entrance_Internal(EntranceNum);
+}
+
+void Entrance_Internal(int a)
+{
+if (a == 4)
+{
+
+}
+else
+{
+
+}
 }
