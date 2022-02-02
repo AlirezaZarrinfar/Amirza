@@ -17,13 +17,15 @@ void Rank();
 void Challenge();
 void Show_Internal_Menu();
 void Entrance_Internal(int a);
+void Edit_Profile();
+void Wheel_Of_Luck();
 string name;
 string password;
 int level;
 int coin;
 int extraWords;
 int chance;
-
+int user_idx;
 
 int main()
 {     
@@ -144,6 +146,7 @@ void Sign_Up()
     level = 1; 
     chance = 0; 
     extraWords = 0;
+    user_idx = n;
     ouser.close();
     cout << "Successfully Done !!" << endl;
     Show_Internal_Menu();
@@ -224,6 +227,7 @@ void Login()
         coin = stoi(Users[temp][3]);
         extraWords = stoi(Users[temp][4]);
         chance = stoi(Users[temp][5]);
+        user_idx = temp;
         Show_Internal_Menu();
     }
     else
@@ -234,8 +238,6 @@ void Login()
     while (flag2 == true);
 }
 }
-
-
 
 void Rank()
 {
@@ -288,7 +290,7 @@ void Rank()
 void Challenge()
 {
     srand(time(0));
-    int RandomNum = rand()%20+1;
+    int RandomNum = rand()%17+1;
     ifstream ilevels ("./levels.txt");
     string temp;
 
@@ -466,10 +468,189 @@ void Entrance_Internal(int a)
 {
 if (a == 4)
 {
-
+    Edit_Profile();
+    return;
+}
+else if (a == 3)
+{
+    Wheel_Of_Luck();
+    return;
+}
+else if (a == 5)
+{
+    Show_Main_Menu();
+    return;
 }
 else
 {
+    cout << "Please Enter The Correct Number !!"<<endl;
+    Show_Internal_Menu();
+}
+}
 
+void Edit_Profile()
+{
+    ifstream iuser("./user.txt");
+    if (!iuser)
+    {
+        cout << "File Not Found !!!" << endl;
+    }
+    else
+    {
+    int n;
+    iuser >> n;
+    string Users[n][6];
+    for (int i = 0;i<n;i++)
+    {
+        for(int j = 0;j<6;j++)
+        {
+           iuser >> Users[i][j] ;
+        }
+    }
+    iuser.close();
+    bool flag1 = false; 
+    bool flag2 = false;
+    do
+    {
+    flag1 = false;
+    cout << "Enter * To Internal Menu !!" << endl;
+    cout << "Please Enter Your Password : ";
+    string pass;
+    string newusername;
+    cin >> pass;
+    if (pass == "*")
+    {
+        Show_Internal_Menu();
+        return;
+    }
+    else
+    {
+    if (pass == password)
+    {
+        do
+        {
+        flag2 = false;
+        cout << "Please Enter Your New Username : ";
+        cin >> newusername;
+        for (int i = 0 ; i < n ; i++)
+        {
+            if (newusername == Users[i][0])
+            {
+                cout << "This Username Is Already Used"<<endl;
+                flag2 = true;
+            }
+        }
+        }
+        while(flag2 == true);
+        Users[user_idx][0] = newusername;
+        cout << "Please Enter Your New Password : ";
+        cin >> Users[user_idx][1];
+    ofstream ouser("./user.txt");
+    ouser << n << "\n";
+    for (int i = 0 ; i < n;i++)
+    {
+        for (int j = 0 ; j < 6; j++)
+        {
+            ouser << Users[i][j] << "\t";
+        }
+        ouser << "\n";
+    }
+    ouser.close();
+    cout << "Successfully Done !!" <<endl;
+    Show_Internal_Menu();
+    return;
+    }
+    else
+    {
+        cout << "Your Password Is Wrong !!"<<endl;
+        flag1 = true;
+    }
+    }}
+    while(flag1 == true);
+}}
+
+void Wheel_Of_Luck()
+{
+    ifstream iuser("./user.txt");
+    if (!iuser)
+    {
+        cout << "File Not Found !!!" << endl;
+    }
+    else
+    {
+    int n;
+    iuser >> n;
+    string Users[n][6];
+    for (int i = 0;i<n;i++)
+    {
+        for(int j = 0;j<6;j++)
+        {
+           iuser >> Users[i][j] ;
+        }
+    }
+    iuser.close();
+    cout << endl << "Your Luck(s) Is/Are : " << chance<<endl;
+    cout << "Enter * To Menu !!"<<endl;
+    cout << "Enter 1 To Rotate The Wheel"<<endl;
+    cout << "50 coins\n" << "70 coins\n" << "90 coins\n" << "110 coins\n" << "150 coins\n" << "220 coins\n";
+    string enter ;
+    cin >> enter;
+    if (enter == "*")
+    {
+        Show_Internal_Menu();
+        return;
+    }
+    else if (enter == "1")
+    {
+        srand(time(0));
+        int RandomNum = rand()%100+1;
+        if (RandomNum > 0 && RandomNum <= 30)
+        {
+            coin += 50;
+        }
+        else if (RandomNum > 30 && RandomNum <= 50)
+        {
+            coin += 70;
+        }
+        else if (RandomNum > 50 && RandomNum <= 70)
+        {
+            coin += 90;
+        }
+        else if (RandomNum > 70 && RandomNum <= 85)
+        {
+            coin += 110;
+        }
+        else if (RandomNum > 85 && RandomNum <= 95)
+        {
+            coin += 150;
+        }
+        else if (RandomNum > 95 && RandomNum <= 100)
+        {
+            coin += 220;
+        }
+        chance -- ;
+        Users[user_idx][3] = to_string(coin);
+        Users[user_idx][5] = to_string(chance);
+
+        ofstream ouser("./user.txt");
+        ouser << n << "\n";
+        for (int i = 0 ; i < n;i++)
+        {
+            for (int j = 0 ; j < 6; j++)
+            {
+            ouser << Users[i][j] << "\t";
+            }
+            ouser << "\n";
+        }
+        ouser.close();
+        Show_Internal_Menu();
+        return;
+    }
+    else
+    {
+        cout << "Please Enter A Correct Number"<<endl;
+        Wheel_Of_Luck();
+        return;
+    }
 }
 }

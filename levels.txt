@@ -1,10 +1,8 @@
 3 4 7 6
-
 hwo 2 0 how who
 tpo 4 0 to top pot opt
 mra 3 1 am arm ram mar
 wno 3 2 own no won now on
-
 slat 3 2 last as sat salt at
 insg 4 3 sign in sing gin gins is sin
 nrea 5 3 earn ear near ern an are era ran
@@ -12,7 +10,6 @@ reev 4 3 rev veer ever vee ere ree eve
 when 5 2 when new hen hewn he we hew
 anym 6 4 any an many yam nam may nay my man am
 taer 7 5 are era art tea tear eat rate at ear ate tar rat
-
 shelf 4 3 she shelf sel self flesh elf he
 wndiy 4 1 win wind windy in din
 htuoy 5 3 you youth out toy hoy hot to hut
