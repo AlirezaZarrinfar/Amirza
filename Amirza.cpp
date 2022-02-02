@@ -98,12 +98,12 @@ void Sign_Up()
         }
     }
     iuser.close();
-
-    label:
-
+    string Name;
+    bool flag1 = false;
+    do {
+    flag1 = false;
     cout << "!! Enter * To Main Menu !!" << endl;
     cout << "Please Enter Your Username : " ;
-    string Name;
     cin >> Name;
     if (Name == "*")
       {
@@ -112,14 +112,16 @@ void Sign_Up()
       }
       else
       {
-    for (int i = 0;i<n;i++)
+     for (int i = 0;i<n;i++)
     {
         if (Users[i][0] == Name)
         {
             cout << "This Username Is Already Taken !!"<< endl;
-            goto label;
+            flag1 = true;
+            break;
         }
-    }
+    }}}
+    while(flag1 == true);
     cout << "Please Enter Your Password : ";
     string Password;
     cin >> Password;
@@ -146,7 +148,7 @@ void Sign_Up()
     cout << "Successfully Done !!" << endl;
     Show_Internal_Menu();
     }
-}}
+}
 
 void Login()
 {
@@ -168,11 +170,14 @@ void Login()
         }
     }
     iuser.close();
-
-    label :
+    bool flag1 = false;
+    string Username ;
+    int temp = -1;
+    do
+    {
+    flag1 = false;
     cout << "!! Enter * To Main Menu !!" << endl;
     cout << "Please Enter Your Username : " ;
-    string Username ;
     cin >> Username ;
     if (Username == "*")
     {
@@ -181,7 +186,6 @@ void Login()
     }
     else
     {
-    int temp = -1;
     for (int i = 0;i<n;i++)
     {
         if (Users[i][0]==Username)
@@ -193,12 +197,17 @@ void Login()
     if (temp == -1)
     {
         cout << "Your Username Not Found !!"<<endl;
-        goto label;
+        flag1 = true;
     }
-    label2 :
+    }}
+    while (flag1 == true);
+    bool flag2 = false;
+    string Password ;
+    do
+    {
+    flag2 = false;
     cout << "!! Enter * To Main Menu !!" << endl;
     cout << "Please Enter Your Password : ";
-    string Password ;
     cin >> Password ;
     if (Password == "*")
     {
@@ -220,12 +229,13 @@ void Login()
     else
     {
          cout << "Your Password Is Incorrect" << endl;
-         goto label2;
-    }
+         flag2 = true;
+    }}}
+    while (flag2 == true);
 }
 }
-}
-}
+
+
 
 void Rank()
 {
