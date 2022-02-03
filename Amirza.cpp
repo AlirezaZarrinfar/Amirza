@@ -312,7 +312,7 @@ void Challenge()
     }
     srand(time(0));
     int RandomNum = rand()%levelsnum+1;
-    for (int i = 0 ; i < RandomNum-1; i++)
+    for (int i = 0 ; i < RandomNum; i++)
     {
         getline(ilevels,temp);
     }
