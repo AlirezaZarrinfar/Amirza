@@ -19,6 +19,10 @@ void Show_Internal_Menu();
 void Entrance_Internal(int a);
 void Edit_Profile();
 void Wheel_Of_Luck();
+void Continue_Game(bool IsContinue);
+void Choose_Level(int User_level);
+void Select_Level();
+
 string name;
 string password;
 int level;
@@ -26,6 +30,12 @@ int coin;
 int extraWords;
 int chance;
 int user_idx;
+
+string help = "";
+string helpword = "";
+int helpsize = 0;
+int counter = 0 ;
+int idx = 0;
 
 int main()
 {     
@@ -481,6 +491,16 @@ else if (a == 5)
     Show_Main_Menu();
     return;
 }
+else if (a == 1)
+{
+    Continue_Game(false);
+    return;
+}
+else if (a == 2)
+{
+    Select_Level();
+    return;
+}
 else
 {
     cout << "Please Enter The Correct Number !!"<<endl;
@@ -654,3 +674,546 @@ void Wheel_Of_Luck()
     }
 }
 }
+
+void Continue_Game(bool IsContinue)
+{
+ifstream iuser("./user.txt");
+    if (!iuser)
+    {
+        cout << "File Not Found !!!" << endl;
+    }
+    else
+    {
+    int n;
+    iuser >> n;
+    string Users[n][6];
+    for (int i = 0;i<n;i++)
+    {
+        for(int j = 0;j<6;j++)
+        {
+           iuser >> Users[i][j] ;
+        }
+    }
+    iuser.close();
+ string temp;
+ ifstream ilevels ("./levels.txt");
+ int Season;
+ ilevels >> Season;
+ int LevelNum[Season] ;
+ for (int i = 0 ; i < Season ; i++)
+ {
+     ilevels >> LevelNum[i];
+ }
+ if (IsContinue == true)
+ {
+ for (int i = 0 ; i < Season ; i++)
+ {
+     if(level == LevelNum[i]+1)
+     {
+        chance ++;
+        Users[user_idx][5] = to_string(chance);
+        ofstream ouser("./user.txt");
+        ouser << n << "\n";
+        for (int i = 0 ; i < n;i++)
+        {
+            for (int j = 0 ; j < 6; j++)
+            {
+             ouser << Users[i][j] << "\t";
+            }
+            ouser << "\n";
+        }
+        ouser.close();
+     }
+ }
+ }
+    for (int i = 0 ; i < level; i++)
+    {
+        getline(ilevels,temp);
+    }
+    string letters ;
+    ilevels >> letters;
+    int NumMainWords;
+    ilevels >> NumMainWords;
+    int NumExtraWords;
+    ilevels >> NumExtraWords;
+    string Main_Words [NumMainWords];
+    string MainWordsAns [NumMainWords];
+    int MainWordAnsIdx = 0;
+    string Extra_Words [NumExtraWords];
+    string ExtraWordsAns [NumMainWords];
+    int ExtraWordAnsIdx = 0;
+    for (int i = 0;i<NumMainWords;i++)
+    {
+        ilevels >> Main_Words[i];
+    }
+    for (int i = 0;i<NumExtraWords;i++)
+    {
+        ilevels >> Extra_Words[i];
+    }
+
+    int leveltemp = level;
+    int Seasons =0;
+    for (int i = 0 ; leveltemp > 0;i ++)
+    {
+        leveltemp -= LevelNum[i];
+        Seasons ++;
+    }
+    while(true)
+    {
+    if (extraWords == 6)
+    {
+        coin += 50 ;
+        extraWords = 0;
+    }
+    cout << "Season : " 
+    << Seasons 
+    << "\t\t" 
+    << "Level : " 
+    << level 
+    << "\t\t" 
+    << "Coin : " 
+    << coin 
+    << "\t\t" 
+    << "ExtraWords : "
+    << extraWords << endl << endl;
+    cout << letters << endl;
+    cout << "-------"<<endl;
+    for (int i = 0 ; i < MainWordAnsIdx;i++)
+    {
+        cout << MainWordsAns[i]<<endl;
+    }
+    cout << "-------"<<endl;
+    cout << helpword;
+    for (int i = 0;i < helpsize - counter ; i++)
+    {
+        cout << "-";
+    }
+    cout << endl;
+    cout << "Enter Word : ";
+    string enter;
+    cin >> enter;
+    if (enter == "*")
+    {
+        Users[user_idx][3] = to_string(coin);
+        Users[user_idx][4] = to_string(extraWords);
+        ofstream ouser("./user.txt");
+        ouser << n << "\n";
+        for (int i = 0 ; i < n;i++)
+            {
+                for (int j = 0 ; j < 6; j++)
+                {
+                ouser << Users[i][j] << "\t";
+                }
+            ouser << "\n";
+            }
+        ouser.close();
+        Show_Internal_Menu();
+        return;
+    }
+    else if (enter == "#")
+    {
+        if (coin < 80)
+        {
+            cout << "Your Coins Isn't Enough !"<<endl;
+        }
+        else
+        {
+        if (help == "")
+        {
+            for (int i = 0;i<NumMainWords;i++)
+            {
+                if (Main_Words[i] != "")
+                {
+                    idx = i;
+                    help = Main_Words[i];
+                    helpsize = help.size();
+                    break;
+                }
+            }
+        }
+        helpword = helpword + help[counter];
+        coin = coin - 80;
+        counter ++;
+        if (help == helpword)
+        {
+            help = "";
+            helpword = "";
+            helpsize = 0;
+            counter = 0 ; 
+            MainWordsAns[MainWordAnsIdx] = Main_Words[idx];
+            MainWordAnsIdx ++;
+            Main_Words[idx] = "";
+            idx = 0;
+        }
+
+    }}
+    else if (enter == "$")
+    {
+        int count =0;
+        int lsize = letters.size();
+        char arrletters[lsize] ;
+        while(count < lsize)
+        {
+        srand(time(0));
+        int RandomNum = rand() %  lsize;
+        bool flag = false;
+        for (int i = 0;i<count;i++)
+        {
+            if (arrletters[i] == letters[RandomNum])
+            {
+                flag = true;
+            }
+        }
+        if (flag == false)
+        {
+        arrletters[count] = letters[RandomNum];
+        count ++;
+        }}
+        letters = arrletters;
+    }
+    else 
+    {
+        for (int i = 0 ;i<NumMainWords+NumExtraWords;i++)
+        {
+            if (enter == Main_Words[i])
+            {
+               if (enter == help)
+               {
+                    help = "";
+                    helpword = "";
+                    helpsize = 0;
+                    counter = 0 ; 
+                    idx = 0;  
+               }
+               MainWordsAns[MainWordAnsIdx] = Main_Words[i];
+               MainWordAnsIdx ++;
+               Main_Words[i] = "";
+               cout << "Your Answer Is Correct"<< endl ;
+               break;
+            }
+            else if (enter == Extra_Words[i])
+            {
+               ExtraWordsAns[ExtraWordAnsIdx] = Extra_Words[i];
+               ExtraWordAnsIdx ++;
+               Extra_Words[i] = "";
+               cout << "Your Answer Is ExtraWord"<<endl ;
+               extraWords++;
+               break;
+            }
+            else if (enter == MainWordsAns[i])
+            {
+                cout << "Your Answer Is Already Found , Try Again !"<<endl;
+                break;
+            }
+            else if (enter == ExtraWordsAns[i])
+            {
+                cout << "Your Answer Is Already Found In ExtraWords, Try Again !"<<endl;
+                break;
+            }
+            if (i == NumMainWords+NumExtraWords - 1)
+            {
+                cout << "Your Answer Is Wrong !!" << endl;
+            }
+        }
+        bool flag = false;
+        for (int i = 0 ; i < NumMainWords ; i++)
+        {
+            if (Main_Words[i] != "")
+            {
+            flag = true;
+            break;
+            }
+        }
+        if (flag == false)
+        {
+            cout << "You Won !!"<<endl;
+            level ++;
+            coin = coin + 100;
+            Users[user_idx][2] = to_string(level);
+            Users[user_idx][3] = to_string(coin);
+            Users[user_idx][4] = to_string(extraWords);
+            ofstream ouser("./user.txt");
+            ouser << n << "\n";
+            for (int i = 0 ; i < n;i++)
+            {
+                for (int j = 0 ; j < 6; j++)
+                {
+                ouser << Users[i][j] << "\t";
+                }
+            ouser << "\n";
+            }
+            ouser.close();
+            break;
+        }
+    }
+    }
+    Continue_Game(true);
+}}
+
+void Select_Level()
+{
+    cout << "Please Enter A Level : ";
+    int levelselect ;
+    cin >> levelselect;
+    if (levelselect <= level && levelselect > 0)
+    {
+        Choose_Level(levelselect);
+        return;
+    }
+    else
+    {
+        cout << "This Level Is Lock For You"<<endl;
+        Select_Level();
+    }
+}
+
+void Choose_Level(int User_level)
+{
+    if (User_level == level)
+    {
+        Continue_Game(false);
+        return;
+    }
+    else
+    {
+    ifstream iuser("./user.txt");
+    if (!iuser)
+    {
+        cout << "File Not Found !!!" << endl;
+    }
+    else
+    {
+    int n;
+    iuser >> n;
+    string Users[n][6];
+    for (int i = 0;i<n;i++)
+    {
+        for(int j = 0;j<6;j++)
+        {
+           iuser >> Users[i][j] ;
+        }
+    }
+    iuser.close();
+
+
+ string temp;
+ ifstream ilevels ("./levels.txt");
+ int Season;
+ ilevels >> Season;
+ int LevelNum[Season] ;
+ for (int i = 0 ; i < Season ; i++)
+ {
+     ilevels >> LevelNum[i];
+ }
+    for (int i = 0 ; i < User_level; i++)
+    {
+        getline(ilevels,temp);
+    }
+    string letters ;
+    ilevels >> letters;
+    int NumMainWords;
+    ilevels >> NumMainWords;
+    int NumExtraWords;
+    ilevels >> NumExtraWords;
+    string Main_Words [NumMainWords];
+    string MainWordsAns [NumMainWords];
+    int MainWordAnsIdx = 0;
+    string Extra_Words [NumExtraWords];
+    string ExtraWordsAns [NumMainWords];
+    int ExtraWordAnsIdx = 0;
+    for (int i = 0;i<NumMainWords;i++)
+    {
+        ilevels >> Main_Words[i];
+    }
+    for (int i = 0;i<NumExtraWords;i++)
+    {
+        ilevels >> Extra_Words[i];
+    }
+
+    int leveltemp = User_level;
+    int Seasons =0;
+    for (int i = 0 ; leveltemp > 0;i ++)
+    {
+        leveltemp -= LevelNum[i];
+        Seasons ++;
+    }
+    while(true)
+    {
+    cout << "Season : " 
+    << Seasons 
+    << "\t\t" 
+    << "Level : " 
+    << User_level
+    << "\t\t" 
+    << "Coin : " 
+    << coin 
+    << "\t\t" 
+    << "ExtraWords : "
+    << extraWords << endl << endl;
+    cout << letters << endl;
+    cout << "-------"<<endl;
+    for (int i = 0 ; i < MainWordAnsIdx;i++)
+    {
+        cout << MainWordsAns[i]<<endl;
+    }
+    cout << "-------"<<endl;
+    cout << helpword;
+    for (int i = 0;i < helpsize - counter ; i++)
+    {
+        cout << "-";
+    }
+    cout << endl;
+    cout << "Enter Word : ";
+    string enter;
+    cin >> enter;
+    if (enter == "*")
+    {
+        Users[user_idx][3] = to_string(coin);
+        ofstream ouser("./user.txt");
+        ouser << n << "\n";
+        for (int i = 0 ; i < n;i++)
+            {
+                for (int j = 0 ; j < 6; j++)
+                {
+                ouser << Users[i][j] << "\t";
+                }
+            ouser << "\n";
+            }
+        ouser.close();
+        Show_Internal_Menu();
+        return;
+    }
+    else if (enter == "#")
+    {
+        if (coin < 80)
+        {
+            cout << "Your Coins Isn't Enough !"<<endl;
+        }
+        else
+        {
+        if (help == "")
+        {
+            for (int i = 0;i<NumMainWords;i++)
+            {
+                if (Main_Words[i] != "")
+                {
+                    idx = i;
+                    help = Main_Words[i];
+                    helpsize = help.size();
+                    break;
+                }
+            }
+        }
+        helpword = helpword + help[counter];
+        coin = coin - 80;
+        counter ++;
+        if (help == helpword)
+        {
+            help = "";
+            helpword = "";
+            helpsize = 0;
+            counter = 0 ; 
+            MainWordsAns[MainWordAnsIdx] = Main_Words[idx];
+            MainWordAnsIdx ++;
+            Main_Words[idx] = "";
+            idx = 0;
+        }
+
+    }}
+    else if (enter == "$")
+    {
+        int count =0;
+        int lsize = letters.size();
+        char arrletters[lsize] ;
+        while(count < lsize)
+        {
+        srand(time(0));
+        int RandomNum = rand() %  lsize;
+        bool flag = false;
+        for (int i = 0;i<count;i++)
+        {
+            if (arrletters[i] == letters[RandomNum])
+            {
+                flag = true;
+            }
+        }
+        if (flag == false)
+        {
+        arrletters[count] = letters[RandomNum];
+        count ++;
+        }}
+        letters = arrletters;
+    }
+    else 
+    {
+        for (int i = 0 ;i<NumMainWords+NumExtraWords;i++)
+        {
+            if (enter == Main_Words[i])
+            {
+               if (enter == help)
+               {
+                    help = "";
+                    helpword = "";
+                    helpsize = 0;
+                    counter = 0 ; 
+                    idx = 0;  
+               }
+               MainWordsAns[MainWordAnsIdx] = Main_Words[i];
+               MainWordAnsIdx ++;
+               Main_Words[i] = "";
+               cout << "Your Answer Is Correct"<< endl ;
+               break;
+            }
+            else if (enter == Extra_Words[i])
+            {
+               ExtraWordsAns[ExtraWordAnsIdx] = Extra_Words[i];
+               ExtraWordAnsIdx ++;
+               Extra_Words[i] = "";
+               cout << "Your Answer Is ExtraWord"<<endl ;
+               break;
+            }
+            else if (enter == MainWordsAns[i])
+            {
+                cout << "Your Answer Is Already Found , Try Again !"<<endl;
+                break;
+            }
+            else if (enter == ExtraWordsAns[i])
+            {
+                cout << "Your Answer Is Already Found In ExtraWords, Try Again !"<<endl;
+                break;
+            }
+            if (i == NumMainWords+NumExtraWords - 1)
+            {
+                cout << "Your Answer Is Wrong !!" << endl;
+            }
+        }
+        bool flag = false;
+        for (int i = 0 ; i < NumMainWords ; i++)
+        {
+            if (Main_Words[i] != "")
+            {
+            flag = true;
+            break;
+            }
+        }
+        if (flag == false)
+        {
+            cout << "You Won !!"<<endl;
+            Users[user_idx][3] = to_string(coin);
+            ofstream ouser("./user.txt");
+            ouser << n << "\n";
+            for (int i = 0 ; i < n;i++)
+            {
+                for (int j = 0 ; j < 6; j++)
+                {
+                ouser << Users[i][j] << "\t";
+                }
+            ouser << "\n";
+            }
+            ouser.close();
+            break;
+        }
+    }
+    }
+    Choose_Level(++User_level);
+}}}

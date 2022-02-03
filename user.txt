@@ -1,10 +1,10 @@
 17
-hamed	5678	3	200	0	0	
+hamed	5678	7	4120	3	2	
 mahdi	8965	9	710	0	0	
 soraya	1111	5	400	2	1	
 ali	4187	10	910	1	0	
 bahar	1234	12	1070	1	1	
-mohammad	2123	15	720	2	1	
+mohammad	2123	15	500	2	3	
 saber	8779	7	350	5	0	
 asal	1818	11	1000	4	1	
 ashkan	5879	5	320	1	1	
