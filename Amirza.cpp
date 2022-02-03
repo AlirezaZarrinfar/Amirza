@@ -554,7 +554,7 @@ void Edit_Profile()
         cin >> newusername;
         for (int i = 0 ; i < n ; i++)
         {
-            if (newusername == Users[i][0])
+            if (newusername == Users[i][0] && newusername != Users[user_idx][0])
             {
                 cout << "This Username Is Already Used"<<endl;
                 flag2 = true;
