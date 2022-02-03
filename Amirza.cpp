@@ -299,12 +299,20 @@ void Rank()
 
 void Challenge()
 {
-    srand(time(0));
-    int RandomNum = rand()%17+1;
     ifstream ilevels ("./levels.txt");
     string temp;
-
-    for (int i = 0 ; i < RandomNum; i++)
+    int seasons ;
+    ilevels >> seasons;
+    int levelsnum = 0;
+    for (int i =0;i<seasons ; i++)
+    {
+        int temp = 0;
+       ilevels >> temp ;
+       levelsnum += temp;
+    }
+    srand(time(0));
+    int RandomNum = rand()%levelsnum+1;
+    for (int i = 0 ; i < RandomNum-1; i++)
     {
         getline(ilevels,temp);
     }
