@@ -622,31 +622,39 @@ void Wheel_Of_Luck()
     }
     else if (enter == "1")
     {
+        if (chance > 0)
+        {
         srand(time(0));
         int RandomNum = rand()%100+1;
         if (RandomNum > 0 && RandomNum <= 30)
         {
             coin += 50;
+            cout << "You Won 50 Coins !!"<<endl;
         }
         else if (RandomNum > 30 && RandomNum <= 50)
         {
             coin += 70;
+            cout << "You Won 70 Coins !!"<<endl;
         }
         else if (RandomNum > 50 && RandomNum <= 70)
         {
             coin += 90;
+            cout << "You Won 90 Coins !!"<<endl;
         }
         else if (RandomNum > 70 && RandomNum <= 85)
         {
             coin += 110;
+            cout << "You Won 110 Coins !!"<<endl;
         }
         else if (RandomNum > 85 && RandomNum <= 95)
         {
             coin += 150;
+            cout << "You Won 150 Coins !!"<<endl;
         }
         else if (RandomNum > 95 && RandomNum <= 100)
         {
             coin += 220;
+            cout << "You Won 220 Coins !!"<<endl;
         }
         chance -- ;
         Users[user_idx][3] = to_string(coin);
@@ -663,6 +671,11 @@ void Wheel_Of_Luck()
             ouser << "\n";
         }
         ouser.close();
+        }
+        else
+        {
+            cout << "You Dont Have Enough Chance !!"<< endl;
+        }
         Show_Internal_Menu();
         return;
     }
