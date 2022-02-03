@@ -11,12 +11,12 @@ using namespace std;
 
 void Show_Main_Menu();
 void Sign_Up();
-void Entrance(int a);
+void Entrance(string a);
 void Login();
 void Rank();
 void Challenge();
 void Show_Internal_Menu();
-void Entrance_Internal(int a);
+void Entrance_Internal(string a);
 void Edit_Profile();
 void Wheel_Of_Luck();
 void Continue_Game(bool IsContinue);
@@ -43,28 +43,28 @@ Show_Main_Menu();
 return 0;
 }
 
-void Entrance(int a)
+void Entrance(string a)
 {
-if (a == 1)
+if (a == "1")
 {
    Sign_Up();
    return;
 }
-else if (a == 2)
+else if (a == "2")
 {
    Login();
    return ;
 }
-else if (a == 3)
+else if (a == "3")
 {
    Rank();
    return;
 }
-else if (a == 4)
+else if (a == "4")
 {
     Challenge();
 }
-else if (a == 5)
+else if (a == "5")
 {
     exit(0);
 }
@@ -84,7 +84,7 @@ void Show_Main_Menu()
     cout << "3.Rank" << endl;
     cout << "4.Challange" << endl;
     cout << "5.Exit" << endl;
-    int EntranceNum;
+    string EntranceNum;
     cout << "Please Enter Your Choice : ";
     cin >> EntranceNum;
     Entrance(EntranceNum);
@@ -468,35 +468,35 @@ void Show_Internal_Menu()
     cout << "3.Wheel of Luck" << endl;
     cout << "4.Edit profile" << endl;
     cout << "5.Logout" << endl;
-    int EntranceNum;
+    string EntranceNum;
     cout << "Please Enter Your Choice : ";
     cin >> EntranceNum;
     Entrance_Internal(EntranceNum);
 }
 
-void Entrance_Internal(int a)
+void Entrance_Internal(string a)
 {
-if (a == 4)
+if (a == "4")
 {
     Edit_Profile();
     return;
 }
-else if (a == 3)
+else if (a == "3")
 {
     Wheel_Of_Luck();
     return;
 }
-else if (a == 5)
+else if (a == "5")
 {
     Show_Main_Menu();
     return;
 }
-else if (a == 1)
+else if (a == "1")
 {
     Continue_Game(false);
     return;
 }
-else if (a == 2)
+else if (a == "2")
 {
     Select_Level();
     return;

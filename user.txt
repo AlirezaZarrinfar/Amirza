@@ -9,7 +9,7 @@ saber	8779	7	350	5	0
 asal	1818	11	1000	4	1	
 ashkan	5879	5	320	1	1	
 taraneh	2020	1	0	0	0	
-alireza	1234	2	210	0	0	
+alireza	1234	2	130	0	0	
 kaveh	5337	1	0	0	0	
 mohamad	5678	1	0	0	0	
 hossein	5687	1	0	0	0	
