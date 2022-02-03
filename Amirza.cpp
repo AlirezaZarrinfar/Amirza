@@ -862,27 +862,22 @@ ifstream iuser("./user.txt");
     }}
     else if (enter == "$")
     {
-        int count =0;
         int lsize = letters.size();
-        char arrletters[lsize] ;
-        while(count < lsize)
+        char letter[lsize] ;
+        for (int i =0;i<lsize;i++)
         {
-        srand(time(0));
-        int RandomNum = rand() %  lsize;
-        bool flag = false;
-        for (int i = 0;i<count;i++)
-        {
-            if (arrletters[i] == letters[RandomNum])
-            {
-                flag = true;
-            }
+            letter[i] = letters[i];
         }
-        if (flag == false)
+        for (int i = 0;i<100;i++)
         {
-        arrletters[count] = letters[RandomNum];
-        count ++;
-        }}
-        letters = arrletters;
+            int random1 = rand() % lsize;
+            int random2 = rand() % lsize;
+            char ltemp ;
+            ltemp = letter[random1];
+            letter[random1] = letter[random2];
+            letter[random2] = ltemp;
+        }
+        letters = letter;
     }
     else 
     {
@@ -1135,27 +1130,22 @@ void Choose_Level(int User_level)
     }}
     else if (enter == "$")
     {
-        int count =0;
         int lsize = letters.size();
-        char arrletters[lsize] ;
-        while(count < lsize)
+        char letter[lsize] ;
+        for (int i =0;i<lsize;i++)
         {
-        srand(time(0));
-        int RandomNum = rand() %  lsize;
-        bool flag = false;
-        for (int i = 0;i<count;i++)
-        {
-            if (arrletters[i] == letters[RandomNum])
-            {
-                flag = true;
-            }
+            letter[i] = letters[i];
         }
-        if (flag == false)
+        for (int i = 0;i<100;i++)
         {
-        arrletters[count] = letters[RandomNum];
-        count ++;
-        }}
-        letters = arrletters;
+            int random1 = rand() % lsize;
+            int random2 = rand() % lsize;
+            char ltemp ;
+            ltemp = letter[random1];
+            letter[random1] = letter[random2];
+            letter[random2] = ltemp;
+        }
+        letters = letter;
     }
     else 
     {
